@@ -1,5 +1,5 @@
 <?php
-//2022.09.13.00
+//2022.09.13.01
 
 namespace ProtocolLive\GoogleApi;
 
@@ -27,7 +27,7 @@ class Oauth2{
     );
   }
 
-  public static function CredentialsGet(
+  public function CredentialsGet(
     string $ApiId,
     string $ApiSecret,
     string $Token,
