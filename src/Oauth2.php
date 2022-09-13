@@ -1,30 +1,16 @@
 <?php
-//2022.09.13.01
+//Protocol Corporation Ltda.
+//https://github.com/ProtocolLive/GoogleApi
+//2022.09.13.02
 
 namespace ProtocolLive\GoogleApi;
 
 /**
  * @return string The refresh token
  */
-class Oauth2{
-  private string $DirLog;
-
-  public function __construct(
-    string $DirLog = null
-  ){
-    if($DirLog === null):
-      $this->DirLog = dirname(ini_get('error_log'));
-    else:
-      $this->DirLog = $DirLog;
-    endif;
-  }
-
-  protected function ErrorLog(string $Msg){
-    file_put_contents(
-      $this->DirLog . '/GoogleContacts.log',
-      $Msg . PHP_EOL,
-      FILE_APPEND
-    );
+class Oauth2 extends Basics{
+  public function __construct(string $DirLogs){
+    $this->DirLogs = $DirLogs;
   }
 
   public function CredentialsGet(

@@ -1,19 +1,21 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.00
+//2022.09.13.01
 
 namespace ProtocolLive\GoogleApi\Contacts;
-use ProtocolLive\GoogleApi\Oauth2;
+use ProtocolLive\GoogleApi\Basics;
 
-class Contacts extends Oauth2{
+class Contacts extends Basics{
   private const Url = 'https://people.googleapis.com/v1';
   private string $Token;
   public string|null $Error = null;
 
   public function __construct(
-    string $Token
+    string $Token,
+    string $DirLogs = null
   ){
+    parent::__construct($DirLogs);
     $this->Token = $Token;
   }
 
