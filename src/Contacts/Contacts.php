@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.01
+//2022.09.13.02
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\Basics;
@@ -41,9 +41,9 @@ class Contacts extends Basics{
       'Authorization: Bearer ' . $this->Token
     ]);
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($Data));
-    $this->ErrorLog('Contact - Create - Send: ' . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
+    $this->Log('Contact - Create - Send: ' . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
     $return = curl_exec($curl);
-    $this->ErrorLog('Contact - Create - Return: ' . PHP_EOL . $return);
+    $this->Log('Contact - Create - Return: ' . PHP_EOL . $return);
     return $return;
   }
 
@@ -62,10 +62,10 @@ class Contacts extends Basics{
     $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($return === false
     or $return === '{}' . PHP_EOL):
-      $this->ErrorLog('Contact - Find - Return: null');
+      $this->Log('Contact - Find - Return: null');
       return null;
     else:
-      $this->ErrorLog('Contact - Find - Return:' . PHP_EOL . $return);
+      $this->Log('Contact - Find - Return:' . PHP_EOL . $return);
       if($code === 503):
         return null;
       else:
@@ -107,7 +107,7 @@ class Contacts extends Basics{
       'Authorization: Bearer ' . $this->Token
     ]);
     $return = curl_exec($curl);
-    $this->ErrorLog('Contact - Edit - Return:' . PHP_EOL . $return);
+    $this->Log('Contact - Edit - Return:' . PHP_EOL . $return);
     if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 400):
       return null;
     endif;

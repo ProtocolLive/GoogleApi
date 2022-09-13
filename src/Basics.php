@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.01
+//2022.09.13.02
 
 namespace ProtocolLive\GoogleApi;
 
@@ -18,7 +18,7 @@ abstract class Basics{
     endif;
   }
 
-  protected function ErrorLog(string $Msg){
+  protected function Log(string $Msg){
     file_put_contents(
       $this->DirLogs . '/GoogleContacts.log',
       $Msg . PHP_EOL,
