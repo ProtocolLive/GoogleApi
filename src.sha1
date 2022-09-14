@@ -1,0 +1,16 @@
+dee6a60573e799f89be2ea94c69a7e1ed8b59bd9  src/Api.php
+6fc5717c3957bca7333c228edab48cd38f42ae23  src/Basics.php
+03b5ac40dab10399cb2a3e409ce206c97fec6f67  src/Contacts/Contacts.php
+6fc0b88eb5bb5b9528720090f834f9894ba70075  src/Contacts/Data.php
+b84aed03430818559e6411dc1b7562ae83c8dca4  src/Contacts/Fields.php
+595934083d7049fb7ebe9ce4a437025d25a33171  src/Contacts/FilterMasks.php
+f15caef26b1c13cad901c8d031aa24ab8d224bc2  src/Contacts/Masks/Address.php
+28bfbff749d223691d2404299530b0a7ebb1a922  src/Contacts/Masks/Birthdays.php
+c90c256cf4f1a505ffe71ca81c75b8a3ae22c99a  src/Contacts/Masks/Date.php
+7152510d24b070596d8e4c4971cf334e6c8445ed  src/Contacts/Masks/Email.php
+581c4d7838f87ed9dacf34be6577e251f3ced38c  src/Contacts/Masks/Names.php
+a2ec5147284f0b25f4e24f89f6053615bc1ac5ef  src/Contacts/Masks/Phone.php
+d0f6937e78f2bab0f9797b7c677dbbdd13b4af29  src/Contacts/Masks.php
+dc921da260622b289d3f96dab602063a8921effa  src/Logs.php
+e150bc4e59cc93a755528dfed264dfa72a1198fe  src/Oauth2.php
+841781a5db71232db2dfe2498590a5c186783a13  src/Scopes.php
