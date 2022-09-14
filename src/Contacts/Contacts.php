@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.00
+//2022.09.14.01
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -23,10 +23,10 @@ class Contacts extends Basics{
   }
 
   /**
-   * @param array $Return Can be addresses, biographies, birthdays, braggingRights, calendarUrls, clientData, emailAddresses, etag, events, externalIds, fileAses, genders, imClients, interests, locales, locations, memberships, metadata, miscKeywords, names, nicknames, occupations, organizations, phoneNumbers, relations, residences, resourceName, sipAddresses, skills, urls, userDefined
+   * @link https://developers.google.com/people/api/rest/v1/people/createContact
    */
   public function Create(
-    array $Data,
+    Data $Data,
     string $Return = null
   ):string|false{
     if($Return !== null):
@@ -43,13 +43,16 @@ class Contacts extends Basics{
       'Accept: application/json',
       'Authorization: Bearer ' . $this->Token
     ]);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($Data));
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $Data->Get());
     $return = curl_exec($curl);
     $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
     $this->Log(Api::Contacts, __METHOD__, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
     return $return;
   }
 
+  /**
+   * https://developers.google.com/people/api/rest/v1/people/searchContacts
+   */
   public function Find(
     string $Text,
     FilterMasks $Masks,
@@ -99,14 +102,20 @@ class Contacts extends Basics{
     endif;
   }
 
+  /**
+   * @link https://developers.google.com/people/api/rest/v1/people/batchUpdateContacts
+   */
   public function Edit(
-    array $Values,
-    string $FieldsUpdate,
-    string $FieldsReturn = null
+    string $ResourceId,
+    Data $Data,
+    FilterMasks $FieldsUpdate,
+    FilterMasks $FieldsReturn = null
   ):string|null{
-    $get['updateMask'] = $FieldsUpdate;
-    $get['readMask'] = $FieldsReturn;
-    $post['contacts'] = $Values;
+    $get['updateMask'] = $FieldsUpdate->Get();
+    $post['contacts'][$ResourceId] = $Data->Get();
+    if($FieldsReturn !== null):
+      $get['readMask'] = $FieldsReturn->Get();
+    endif;
     $url = self::Url . '/people:batchUpdateContacts?' . http_build_query($get);
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
