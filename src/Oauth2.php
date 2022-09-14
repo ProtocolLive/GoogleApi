@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.00
+//2022.09.14.01
 
 namespace ProtocolLive\GoogleApi;
 
@@ -40,8 +40,8 @@ class Oauth2 extends Basics{
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
     $return = curl_exec($curl);
-    $this->Log(Api::Oauth, Logs::Send, $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT));
-    $this->Log(Api::Oauth, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
+    $this->Log(Api::Oauth, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT));
+    $this->Log(Api::Oauth, __METHOD__, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
     if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200):
       $return = json_decode($return, true);
       $_SESSION['Oauth2']['Token'] = $return['access_token'];
