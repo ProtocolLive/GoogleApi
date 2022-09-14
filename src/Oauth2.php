@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.02
+//2022.09.14.00
 
 namespace ProtocolLive\GoogleApi;
 
@@ -9,8 +9,11 @@ namespace ProtocolLive\GoogleApi;
  * @return string The refresh token
  */
 class Oauth2 extends Basics{
-  public function __construct(string $DirLogs){
-    $this->DirLogs = $DirLogs;
+  public function __construct(
+    int $Log,
+    string $DirLogs = null
+  ){
+    parent::__construct($Log, $DirLogs);
   }
 
   public function CredentialsGet(
@@ -32,10 +35,13 @@ class Oauth2 extends Basics{
       $post['grant_type'] = 'authorization_code';
       $post['code'] = $Token;
     endif;
-    $curl = curl_init('https://oauth2.googleapis.com/token');
+    $url = 'https://oauth2.googleapis.com/token';
+    $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
     $return = curl_exec($curl);
+    $this->Log(Api::Oauth, Logs::Send, $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT));
+    $this->Log(Api::Oauth, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
     if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200):
       $return = json_decode($return, true);
       $_SESSION['Oauth2']['Token'] = $return['access_token'];

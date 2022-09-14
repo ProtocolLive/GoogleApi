@@ -1,10 +1,12 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.02
+//2022.09.14.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
-use ProtocolLive\GoogleApi\Basics;
+use ProtocolLive\GoogleApi\{
+  Api, Basics, Logs
+};
 
 class Contacts extends Basics{
   private const Url = 'https://people.googleapis.com/v1';
@@ -13,9 +15,10 @@ class Contacts extends Basics{
 
   public function __construct(
     string $Token,
+    int $Log,
     string $DirLogs = null
   ){
-    parent::__construct($DirLogs);
+    parent::__construct($Log, $DirLogs);
     $this->Token = $Token;
   }
 
@@ -41,9 +44,9 @@ class Contacts extends Basics{
       'Authorization: Bearer ' . $this->Token
     ]);
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($Data));
-    $this->Log('Contact - Create - Send: ' . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
     $return = curl_exec($curl);
-    $this->Log('Contact - Create - Return: ' . PHP_EOL . $return);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
+    $this->Log(Api::Contacts, __METHOD__, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
     return $return;
   }
 
@@ -55,34 +58,40 @@ class Contacts extends Basics{
     $get['query'] = $Text;
     $get['pageSize'] = $Count;
     $get['readMask'] = $Masks->Get();
-    $get['access_token'] = $this->Token;
-    $curl = curl_init(self::Url . '/people:searchContacts?' . http_build_query($get));
+    $url = self::Url . '/people:searchContacts?' . http_build_query($get);
+    $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+      'Content-Type: application/json',
+      'Accept: application/json',
+      'Authorization: Bearer ' . $this->Token
+    ]);
     $return = curl_exec($curl);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
     $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($return === false
-    or $return === '{}' . PHP_EOL):
-      $this->Log('Contact - Find - Return: null');
+    or $return === '{}' . PHP_EOL
+    or $code === 503):
       return null;
     else:
-      $this->Log('Contact - Find - Return:' . PHP_EOL . $return);
-      if($code === 503):
-        return null;
-      else:
-        return json_decode($return, true);
-      endif;
+      return json_decode($return, true);
     endif;
   }
 
   public function List(
     FilterMasks $Masks
   ):array|null{
-    $get['access_token'] = $this->Token;
     $get['personFields'] = $Masks->Get();
     $get['pageSize'] = 1000;
     $curl = curl_init(self::Url . '/people/me/connections?' . http_build_query($get));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     $return = curl_exec($curl);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+      'Content-Type: application/json',
+      'Accept: application/json',
+      'Authorization: Bearer ' . $this->Token
+    ]);
     if($return === false):
       return null;
     else:
@@ -98,7 +107,8 @@ class Contacts extends Basics{
     $get['updateMask'] = $FieldsUpdate;
     $get['readMask'] = $FieldsReturn;
     $post['contacts'] = $Values;
-    $curl = curl_init(self::Url . '/people:batchUpdateContacts?' . http_build_query($get));
+    $url = self::Url . '/people:batchUpdateContacts?' . http_build_query($get);
+    $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($post));
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
@@ -107,7 +117,8 @@ class Contacts extends Basics{
       'Authorization: Bearer ' . $this->Token
     ]);
     $return = curl_exec($curl);
-    $this->Log('Contact - Edit - Return:' . PHP_EOL . $return);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
     if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 400):
       return null;
     endif;
@@ -118,11 +129,18 @@ class Contacts extends Basics{
     string $Id,
     FilterMasks $Masks
   ){
-    $get['access_token'] = $this->Token;
     $get['personFields'] = $Masks->Get();
-    $curl = curl_init(self::Url . '/people/' . $Id . '?' . http_build_query($get));
+    $url = self::Url . '/people/' . $Id . '?' . http_build_query($get);
+    $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, [
+      'Content-Type: application/json',
+      'Accept: application/json',
+      'Authorization: Bearer ' . $this->Token
+    ]);
     $return = curl_exec($curl);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url);
+    $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
     if($return === false):
       return null;
     else:
