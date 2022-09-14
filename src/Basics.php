@@ -1,28 +1,24 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.02
+//2022.09.14.00
 
 namespace ProtocolLive\GoogleApi;
 
 abstract class Basics{
-  protected string $DirLogs;
-
   public function __construct(
-    string $DirLogs = null
-  ){
-    if($DirLogs === null):
-      $this->DirLogs = dirname(ini_get('error_log'));
-    else:
-      $this->DirLogs = $DirLogs;
-    endif;
-  }
+    protected string|null $DirLogs = null
+  ){}
 
   protected function Log(string $Msg){
-    file_put_contents(
-      $this->DirLogs . '/GoogleContacts.log',
-      $Msg . PHP_EOL,
-      FILE_APPEND
-    );
+    if($this->DirLogs === null):
+      error_log($Msg);
+    else:
+      file_put_contents(
+        $this->DirLogs . '/GoogleContacts.log',
+        $Msg . PHP_EOL,
+        FILE_APPEND
+      );
+    endif;
   }
 }
