@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.00
+//2022.09.15.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\Contacts\Masks\{
@@ -45,7 +45,7 @@ class Data{
     ]];
   }
 
-  public function Get():string{
-    return json_encode($this->Fields);
+  public function Get():array{
+    return $this->Fields;
   }
 }
