@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.00
+//2022.09.20.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\Contacts\Masks;
@@ -23,7 +23,13 @@ class FilterMasks{
     $this->Masks[] = $Mask->value;
   }
 
-  public function Get(){
-    return implode(',', $this->Masks);
+  public function Get(
+    bool $Array = false
+  ){
+    if($Array):
+      return $this->Masks;
+    else:
+      return implode(',', $this->Masks);
+    endif;
   }
 }
