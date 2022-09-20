@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.20.00
+//2022.09.20.01
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -112,8 +112,8 @@ class Contacts extends Basics{
     FilterMasks $FieldsUpdate,
     FilterMasks $FieldsReturn = null
   ):string|null{
-    $get['updateMask'] = $FieldsUpdate->Get(true);
-    $post['contacts'][$ResourceId] = $Data->Get();
+    $get['updateMask'] = $FieldsUpdate->Get();
+    $post['contacts'][$ResourceId] = $Data->Get(true);
     $post['contacts'][$ResourceId]['etag'] = $Etag;
     if($FieldsReturn !== null):
       $get['readMask'] = $FieldsReturn->Get();

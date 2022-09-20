@@ -1,9 +1,9 @@
 dee6a60573e799f89be2ea94c69a7e1ed8b59bd9  src/Api.php
 06bf6c1ba7c99d8e0740f50a9ddcaf8745329c12  src/Basics.php
-07e2a52798c7b8faace7a4bb0265108dab931030  src/Contacts/Contacts.php
-556e7510607c0c54c2d708be2d4616d5df75d0ed  src/Contacts/Data.php
+dbfc03092b22d4dbbcac160c41e41df139ad6b43  src/Contacts/Contacts.php
+de764f71cfdcca8e844163517f2a89c6ddd873cd  src/Contacts/Data.php
 b84aed03430818559e6411dc1b7562ae83c8dca4  src/Contacts/Fields.php
-139fd77003f5e9b48b52d345c2584c13e4f5e79d  src/Contacts/FilterMasks.php
+d2957c961d1d34cde3bf8dbaaf50023fc073f7d9  src/Contacts/FilterMasks.php
 f15caef26b1c13cad901c8d031aa24ab8d224bc2  src/Contacts/Masks/Address.php
 28bfbff749d223691d2404299530b0a7ebb1a922  src/Contacts/Masks/Birthdays.php
 c90c256cf4f1a505ffe71ca81c75b8a3ae22c99a  src/Contacts/Masks/Date.php
