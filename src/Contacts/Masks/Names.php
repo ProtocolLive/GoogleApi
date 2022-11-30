@@ -1,24 +1,24 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.13.00
+//2022.11.30.00
 
 namespace ProtocolLive\GoogleApi\Contacts\Masks;
 
 enum Names:string{
-  case NameDisplay = 'displayName';
-  case NameDisplayLastFirst = 'displayNameLastFirst';
-  case NameFamily = 'familyName';
-  case NameFamilyPhonetic = 'phoneticFamilyName';
-  case NameFullPhonetic = 'phoneticFullName';
-  case NameGiven = 'givenName';
-  case NameGivenPhonetic = 'phoneticGivenName';
-  case NameHonorificPrefix = 'honorificPrefix';
-  case NameHonorificPrefixPhonetic = 'phoneticHonorificPrefix';
-  case NameHonorificSuffix = 'honorificSuffix';
-  case NameHonorificSuffixPhonetic = 'phoneticHonorificSuffix';
-  case NameMeta = 'metadata';
-  case NameMiddle = 'middleName';
-  case NameMiddlePhonetic = 'phoneticMiddleName';
-  case NameUnstructured = 'unstructuredName';
+  case Display = 'displayName';
+  case DisplayLastFirst = 'displayNameLastFirst';
+  case Family = 'familyName';
+  case FamilyPhonetic = 'phoneticFamilyName';
+  case FullPhonetic = 'phoneticFullName';
+  case Given = 'givenName';
+  case GivenPhonetic = 'phoneticGivenName';
+  case HonorificPrefix = 'honorificPrefix';
+  case HonorificPrefixPhonetic = 'phoneticHonorificPrefix';
+  case HonorificSuffix = 'honorificSuffix';
+  case HonorificSuffixPhonetic = 'phoneticHonorificSuffix';
+  case Meta = 'metadata';
+  case Middle = 'middleName';
+  case MiddlePhonetic = 'phoneticMiddleName';
+  case Unstructured = 'unstructuredName';
 }
