@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.20.01
+//2022.11.30.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -103,21 +103,21 @@ class Contacts extends Basics{
   }
 
   /**
+   * @param Data[] $Persons
    * @link https://developers.google.com/people/api/rest/v1/people/batchUpdateContacts
    */
   public function Edit(
-    string $ResourceId,
-    string $Etag,
-    Data $Data,
+    array $Persons,
     FilterMasks $FieldsUpdate,
     FilterMasks $FieldsReturn = null
   ):string|null{
     $get['updateMask'] = $FieldsUpdate->Get();
-    $post['contacts'][$ResourceId] = $Data->Get(true);
-    $post['contacts'][$ResourceId]['etag'] = $Etag;
     if($FieldsReturn !== null):
       $get['readMask'] = $FieldsReturn->Get();
     endif;
+    foreach($Persons as $person):
+      $post[] = $person->Get(true);
+    endforeach;
     $url = self::Url . '/people:batchUpdateContacts?' . http_build_query($get);
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -129,6 +129,12 @@ class Contacts extends Basics{
     ]);
     $return = curl_exec($curl);
     $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url);
+    $this->Log(
+      Api::Contacts,
+      __METHOD__,
+      Logs::Send,
+      json_encode($post, JSON_PRETTY_PRINT)
+    );
     $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
     if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 400):
       return null;

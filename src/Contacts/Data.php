@@ -1,15 +1,34 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.20.01
+//2022.11.30.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\Contacts\Masks\{
-  Address, Birthdays, Date, Email, Names, Phone
+  Address,
+  Birthdays,
+  Date,
+  Email,
+  Names,
+  Phone
 };
 
 class Data{
   private array $Fields = [];
+  private array $Pointer;
+
+  public function __construct(
+    private string|null $ResourceId = null,
+    private string|null $Etag = null
+  ){
+    if($ResourceId === null):
+      $this->Pointer = &$this->Fields;
+      return;
+    endif;
+    $this->Fields = [$ResourceId => []];
+    $this->Pointer = &$this->Fields[$ResourceId];
+    $this->Pointer['etag'] = $Etag;
+  }
 
   public function Add(
     Masks $Mask,
@@ -25,9 +44,9 @@ class Data{
       return false;
     endif;
     
-    $this->Fields[$Mask->value] = [[
+    $this->Pointer[$Mask->value][] = [
       $Field->value => $Value
-    ]];
+    ];
     return true;
   }
 
@@ -36,13 +55,13 @@ class Data{
     int $Month,
     int $Day
   ):void{
-    $this->Fields[Masks::Birthdays->value] = [[
+    $this->Pointer[Masks::Birthdays->value][] = [
       Birthdays::Date->value => [
         Date::Year->value => $Year,
         Date::Month->value => $Month,
         Date::Day->value => $Day
       ]
-    ]];
+    ];
   }
 
   public function Get(
