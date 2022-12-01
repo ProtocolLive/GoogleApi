@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.12.01.01
+//2022.12.01.02
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -143,21 +143,35 @@ class Contacts extends Basics{
     return $return;
   }
 
+  /**
+   * @param string[] $ResourceIds
+   */
   public function EtagGet(
-    string $ResourceId
-  ):string|null{
+    array $ResourceIds
+  ):array|null{
     $masks = new FilterMasks;
     $masks->Add(Masks::Names);
-    $return = $this->Get($ResourceId, $masks);
-    return $return['etag'] ?? null;
+    $return = $this->Get($ResourceIds, $masks);
+    foreach($return['responses'] as $contact):
+      $return[$contact['person']['resourceName']] = $contact['person']['etag'];
+    endforeach;
+    unset($return['responses']);
+    return $return;
   }
 
+  /**
+   * @link https://developers.google.com/people/api/rest/v1/people/getBatchGet
+   */
   public function Get(
-    string $Id,
+    array $Ids,
     FilterMasks $Masks
-  ){
+  ):array|null{
     $get['personFields'] = $Masks->Get();
-    $url = self::Url . '/people/' . $Id . '?' . http_build_query($get);
+    $get = http_build_query($get);
+    foreach($Ids as $id):
+      $get .= '&resourceNames=people/' . $id;
+    endforeach;
+    $url = self::Url . '/people:batchGet?' . $get;
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
