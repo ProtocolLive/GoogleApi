@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.12.01.00
+//2022.12.01.01
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -141,6 +141,15 @@ class Contacts extends Basics{
       return null;
     endif;
     return $return;
+  }
+
+  public function EtagGet(
+    string $ResourceId
+  ):string|null{
+    $masks = new FilterMasks;
+    $masks->Add(Masks::Names);
+    $return = $this->Get($ResourceId, $masks);
+    return $return['etag'] ?? null;
   }
 
   public function Get(
