@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.11.30.00
+//2022.12.01.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
@@ -115,8 +115,9 @@ class Contacts extends Basics{
     if($FieldsReturn !== null):
       $get['readMask'] = $FieldsReturn->Get();
     endif;
+    $post['contacts'] = [];
     foreach($Persons as $person):
-      $post[] = $person->Get(true);
+      $post['contacts'] = array_merge($post['contacts'], $person->Get(true));
     endforeach;
     $url = self::Url . '/people:batchUpdateContacts?' . http_build_query($get);
     $curl = curl_init($url);
