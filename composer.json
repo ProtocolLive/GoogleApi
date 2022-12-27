@@ -3,20 +3,20 @@
   "description": "A library to handle with Google API",
   "type": "library",
   "require": {
-      "php": ">=8",
-      "ext-openssl": "*",
-      "ext-curl": "*"
+    "php": ">=8",
+    "ext-openssl": "*",
+    "ext-curl": "*"
   },
   "license": "MIT",
   "authors": [
-      {
-          "name": "Protocol Corporation",
-          "email": "protocollive@outlook.com"
-      }
+    {
+      "name": "Protocol Corporation",
+      "email": "protocollive@outlook.com"
+    }
   ],
   "autoload": {
-      "classmap": [
-          "src/"
-      ]
+    "psr-4": {
+      "ProtocolLive\\GoogleApi\\": "src"
+    }
   }
 }
