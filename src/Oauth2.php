@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.12.29.00
+//2022.12.29.01
 
 namespace ProtocolLive\GoogleApi;
 use Exception;
@@ -18,7 +18,7 @@ class Oauth2 extends Basics{
   }
 
   /**
-   * @return array Array order: Token, expires
+   * @return array Array order: Token, expires, refresh token (if first auth)
    * @throws Exception Throws HTTP code error
    */
   public function CredentialsGet(
@@ -51,20 +51,24 @@ class Oauth2 extends Basics{
       Logs::Send,
       $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT)
     );
+    $return = json_decode($return, true);
     $this->Log(
       Api::Oauth,
       __METHOD__,
       Logs::Response,
       json_encode($return, JSON_PRETTY_PRINT)
     );
-    $return = json_decode($return, true);
     $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     if($code !== 200):
-      throw new Exception($return, $code);
+      throw new Exception(
+        $return['error'] . ' ' . $return['error_description'],
+        $code
+      );
     endif;
     return [
       $return['access_token'],
-      $return['expires_in']
+      $return['expires_in'],
+      $return['refresh_token'] ?? null,
     ];
   }
 }
