@@ -12,5 +12,5 @@ ef9a89f71d00247b0e87793e0c59875deacb7295  Contacts\Masks\Names.php
 a2ec5147284f0b25f4e24f89f6053615bc1ac5ef  Contacts\Masks\Phone.php
 d0f6937e78f2bab0f9797b7c677dbbdd13b4af29  Contacts\Masks.php
 dc921da260622b289d3f96dab602063a8921effa  Logs.php
-e150bc4e59cc93a755528dfed264dfa72a1198fe  Oauth2.php
+2d9332a6eb04fc45daae3b7212d61aea86bf91ad  Oauth2.php
 841781a5db71232db2dfe2498590a5c186783a13  Scopes.php

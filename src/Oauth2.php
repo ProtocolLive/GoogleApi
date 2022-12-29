@@ -1,9 +1,10 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.01
+//2022.12.29.00
 
 namespace ProtocolLive\GoogleApi;
+use Exception;
 
 /**
  * @return string The refresh token
@@ -16,13 +17,17 @@ class Oauth2 extends Basics{
     parent::__construct($Log, $DirLogs);
   }
 
+  /**
+   * @return array Array order: Token, expires
+   * @throws Exception Throws HTTP code error
+   */
   public function CredentialsGet(
     string $ApiId,
     string $ApiSecret,
     string $Token,
     string $Redirect = null,
     bool $Refresh = false
-  ):string|bool{
+  ):array{
     $post = [
       'client_id' => $ApiId,
       'client_secret' => $ApiSecret,
@@ -40,16 +45,26 @@ class Oauth2 extends Basics{
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $post);
     $return = curl_exec($curl);
-    $this->Log(Api::Oauth, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT));
-    $this->Log(Api::Oauth, __METHOD__, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
-    if(curl_getinfo($curl, CURLINFO_HTTP_CODE) === 200):
-      $return = json_decode($return, true);
-      $_SESSION['Oauth2']['Token'] = $return['access_token'];
-      $_SESSION['Oauth2']['Expires'] = strtotime('+' . $return['expires_in'] . ' seconds');
-      return $return['refresh_token'] ?? true;
-    else:
-      echo $return;
-      return false;
+    $this->Log(
+      Api::Oauth,
+      __METHOD__,
+      Logs::Send,
+      $url . PHP_EOL . json_encode($post, JSON_PRETTY_PRINT)
+    );
+    $this->Log(
+      Api::Oauth,
+      __METHOD__,
+      Logs::Response,
+      json_encode($return, JSON_PRETTY_PRINT)
+    );
+    $return = json_decode($return, true);
+    $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($code !== 200):
+      throw new Exception($return, $code);
     endif;
+    return [
+      $return['access_token'],
+      $return['expires_in']
+    ];
   }
 }
