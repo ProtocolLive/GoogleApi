@@ -9,7 +9,8 @@ use Exception;
 /**
  * @return string The refresh token
  */
-class Oauth2 extends Basics{
+class Oauth2
+extends Basics{
   public function __construct(
     int $Log,
     string $DirLogs = null

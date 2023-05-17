@@ -1,7 +1,7 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.09.14.02
+//2023.05.17.00
 
 namespace ProtocolLive\GoogleApi;
 
@@ -11,7 +11,12 @@ abstract class Basics{
     protected string|null $DirLogs = null
   ){}
 
-  protected function Log(Api $Api, string $Method, Logs $Type, string $Msg):void{
+  protected function Log(
+    Api $Api,
+    string $Method,
+    Logs $Type,
+    string $Msg
+  ):void{
     if(($Type->value & $this->Log) === 0):
       return;
     endif;

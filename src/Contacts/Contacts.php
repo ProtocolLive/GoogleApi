@@ -1,14 +1,17 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2022.12.06.00
+//2023.05.17.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
 use ProtocolLive\GoogleApi\{
-  Api, Basics, Logs
+  Api,
+  Basics,
+  Logs
 };
 
-class Contacts extends Basics{
+class Contacts
+extends Basics{
   private const Url = 'https://people.googleapis.com/v1';
   private string $Token;
   public string|null $Error = null;
