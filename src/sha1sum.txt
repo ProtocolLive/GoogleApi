@@ -1,6 +1,6 @@
 dee6a60573e799f89be2ea94c69a7e1ed8b59bd9  Api.php
-06bf6c1ba7c99d8e0740f50a9ddcaf8745329c12  Basics.php
-ab0311eaff8de8e646c56079a9b58763b1b55b6f  Contacts\Contacts.php
+3466c107c236994fab76ccba3041bb02dcf93452  Basics.php
+23eaddf4f3903a02d9e17d10590ec59f1bc022f5  Contacts\Contacts.php
 f5f89a37865ed4cd9778edeb566d24e90aa006bd  Contacts\Data.php
 b84aed03430818559e6411dc1b7562ae83c8dca4  Contacts\Fields.php
 d2957c961d1d34cde3bf8dbaaf50023fc073f7d9  Contacts\FilterMasks.php
@@ -12,5 +12,5 @@ ef9a89f71d00247b0e87793e0c59875deacb7295  Contacts\Masks\Names.php
 a2ec5147284f0b25f4e24f89f6053615bc1ac5ef  Contacts\Masks\Phone.php
 d0f6937e78f2bab0f9797b7c677dbbdd13b4af29  Contacts\Masks.php
 dc921da260622b289d3f96dab602063a8921effa  Logs.php
-c403ee900bc3a3c29718ab7ddb62ecb21ca81784  Oauth2.php
+573b85a53e207b8fca28a078cefc67e87b740100  Oauth2.php
 841781a5db71232db2dfe2498590a5c186783a13  Scopes.php
