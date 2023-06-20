@@ -1,15 +1,18 @@
 <?php
 //Protocol Corporation Ltda.
 //https://github.com/ProtocolLive/GoogleApi
-//2023.05.17.00
 
 namespace ProtocolLive\GoogleApi\Contacts;
+use Exception;
 use ProtocolLive\GoogleApi\{
   Api,
   Basics,
   Logs
 };
 
+/**
+ * @version 2023.06.20.00
+ */
 class Contacts
 extends Basics{
   private const Url = 'https://people.googleapis.com/v1';
@@ -146,12 +149,16 @@ extends Basics{
 
   /**
    * Limited by 200 persons per call
+   * @throws Exception
    * @link https://developers.google.com/people/api/rest/v1/people/getBatchGet
    */
   public function Get(
     array $Ids,
     FilterMasks $Masks
-  ):array|null{
+  ):array{
+    if(count($Ids) > 185):
+      throw new Exception('Too many IDs');
+    endif;
     $get['personFields'] = $Masks->Get();
     $get = http_build_query($get);
     foreach($Ids as $id):
@@ -167,10 +174,11 @@ extends Basics{
     ]);
     $return = curl_exec($curl);
     $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url);
-    $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
     if($return === false):
-      return null;
+      $this->Log(Api::Contacts, __METHOD__, Logs::Response, curl_error($curl));
+      throw new Exception(curl_error($curl));
     else:
+      $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
       return json_decode($return, true);
     endif;
   }
