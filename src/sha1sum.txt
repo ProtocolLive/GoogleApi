@@ -1,6 +1,6 @@
 b140c64275d12e38ec38d904fc003dff45f73294  Api.php
 c19aee0b5c150915a81c0c50ed66e394cb2ecd57  Basics.php
-2e34714708cc88179454c94762a5e85ebb81caaf  Contacts\Contacts.php
+fcdb5a24b438e6d96598f06721fc055dd4f9c120  Contacts\Contacts.php
 972fd15dfe19b1e256a7739de1367bece42fffde  Contacts\Data.php
 1dd605043d51036ed77fa8e8a8bd98c7a4993b23  Contacts\Fields.php
 918aebb5511ba0b3d15936f37b1e483e0ce8d98e  Contacts\FilterMasks.php
