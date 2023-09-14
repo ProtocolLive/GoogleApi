@@ -11,7 +11,7 @@ use ProtocolLive\GoogleApi\{
 };
 
 /**
- * @version 2023.06.20.00
+ * @version 2023.09.14.00
  */
 class Contacts
 extends Basics{
@@ -177,6 +177,9 @@ extends Basics{
     if($return === false):
       $this->Log(Api::Contacts, __METHOD__, Logs::Response, curl_error($curl));
       throw new Exception(curl_error($curl));
+    elseif(curl_getinfo($curl, CURLINFO_HTTP_CODE) !== 200):
+      $this->Log(Api::Contacts, __METHOD__, Logs::Response, curl_error($curl));
+      throw new Exception($return);
     else:
       $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
       return json_decode($return, true);
