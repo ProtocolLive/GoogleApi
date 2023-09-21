@@ -11,7 +11,7 @@ use ProtocolLive\GoogleApi\{
 };
 
 /**
- * @version 2023.09.14.00
+ * @version 2023.09.20.00
  */
 class Contacts
 extends Basics{
@@ -30,6 +30,7 @@ extends Basics{
 
   /**
    * @link https://developers.google.com/people/api/rest/v1/people/createContact
+   * @throws Exception
    */
   public function Create(
     Data $Data,
@@ -50,9 +51,13 @@ extends Basics{
       'Authorization: Bearer ' . $this->Token
     ]);
     curl_setopt($curl, CURLOPT_POSTFIELDS, $Data->Get());
+    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($Data->Get(true), JSON_PRETTY_PRINT));
     $return = curl_exec($curl);
-    $this->Log(Api::Contacts, __METHOD__, Logs::Send, $url . PHP_EOL . json_encode($Data, JSON_PRETTY_PRINT));
-    $this->Log(Api::Contacts, __METHOD__, Logs::Response, json_encode($return, JSON_PRETTY_PRINT));
+    $this->Log(Api::Contacts, __METHOD__, Logs::Response, $return);
+    $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    if($code >= 400){
+      throw new Exception($return, $code);
+    }
     return $return;
   }
 
