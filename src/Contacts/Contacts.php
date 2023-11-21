@@ -11,7 +11,7 @@ use ProtocolLive\GoogleApi\{
 };
 
 /**
- * @version 2023.09.20.00
+ * @version 2023.11.21.00
  */
 class Contacts
 extends Basics{
@@ -114,6 +114,15 @@ extends Basics{
     $masks->Add(Masks::Names);
     $return = $this->Get($ResourceIds, $masks);
     foreach($return['responses'] as $contact):
+      if(isset($contact['person']) === false):
+        $this->Log(
+          Api::Contacts,
+          __METHOD__,
+          Logs::Response,
+          json_encode($contact, JSON_PRETTY_PRINT)
+        );
+        throw new Exception($contact);
+      endif;
       $return[$contact['person']['resourceName']] = $contact['person']['etag'];
     endforeach;
     unset($return['responses']);
