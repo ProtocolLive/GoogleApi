@@ -11,7 +11,7 @@ use ProtocolLive\GoogleApi\{
 };
 
 /**
- * @version 2023.11.21.00
+ * @version 2024.02.06.00
  */
 class Contacts
 extends Basics{
@@ -121,7 +121,7 @@ extends Basics{
           Logs::Response,
           json_encode($contact, JSON_PRETTY_PRINT)
         );
-        throw new Exception($contact);
+        throw new Exception(json_encode($contact));
       endif;
       $return[$contact['person']['resourceName']] = $contact['person']['etag'];
     endforeach;
